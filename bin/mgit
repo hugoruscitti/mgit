@@ -1,5 +1,6 @@
 #!/bin/sh
+DIR="$(pwd)"
 
 cd `dirname "$0"`
 cd ..
-pipenv run python src/main.py
+pipenv run python src/main.py $DIR
