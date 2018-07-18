@@ -1,0 +1,4 @@
+[
+  "tests/test_puede_iniciar.py::test_sumar",
+  "tests/test_puede_iniciar.py::test_puede_invocar_comandos"
+]

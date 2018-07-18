@@ -11,6 +11,10 @@ name = "pypi"
 
 [packages]
 
+colorama = "*"
+gitpython = "*"
+pytest = "*"
+pytest-watch = "*"
 
 
 [requires]
