@@ -13,6 +13,5 @@ def test_puede_invocar_comandos():
 	branch = utilidades.branch('.')
 	assert branch == "master"
 
-
 	cambios = utilidades.cantidad_de_cambios_remotos_no_sincronizados('.')
-	assert branch == 0
+	assert cambios == 0
