@@ -9,3 +9,7 @@ def main():
 	print(Style.RESET_ALL)
 	print('back to normal now')
 	print(f'Este es un {Fore.GREEN}color{Style.RESET_ALL}')
+
+
+if __name__ == '__main__':
+	main()

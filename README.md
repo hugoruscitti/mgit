@@ -9,3 +9,30 @@ junto con algunos indicadores para resolver estas consultas:
 - ¿El repositorio está actualizado?.
 - ¿Cuantos cambios remotos debería traer?
 - ¿Hay archivos modificados que aún no se incluyeron en commits?
+
+## Instalación
+
+```
+git clone https://github.com/hugoruscitti/mgit ~/.mgit
+```
+
+Luego, para hacer accesible el comando en tu shell:
+
+En fish:
+
+```
+set -x PATH ~/.mgit/bin $PATH
+```
+
+En bash:
+
+```
+export PATH=$PATH:~/.mgit/bin
+```
+
+Y por último, ejecutá este comando en el directorio en donde hallas clonado
+tus repositorios:
+
+```
+mgit
+```
