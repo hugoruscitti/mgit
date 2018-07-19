@@ -14,6 +14,8 @@ junto con algunos indicadores para resolver estas consultas:
 
 ```
 git clone https://github.com/hugoruscitti/mgit ~/.mgit
+cd ~/.mgit
+make iniciar
 ```
 
 Luego, para hacer accesible el comando en tu shell:

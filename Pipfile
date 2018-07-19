@@ -15,6 +15,7 @@ colorama = "*"
 gitpython = "*"
 pytest = "*"
 pytest-watch = "*"
+tabulate = "*"
 
 
 [requires]
