@@ -7,8 +7,9 @@ def ejecutar(comando, path='.'):
 def branch(path):
     return ejecutar('git rev-parse --abbrev-ref HEAD', path)
 
-def cantidad_de_cambios_remotos_no_sincronizados(path):
-    return int(ejecutar('git rev-list HEAD...origin/master --count', path))
+def cantidad_de_cambios_remotos_no_sincronizados(path, branch):
+    comando = 'git rev-list HEAD...origin/{} --count'.format(branch)
+    return int(ejecutar(comando, path))
 
 def listar_directorios_git(path):
 

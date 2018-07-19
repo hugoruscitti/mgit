@@ -18,7 +18,7 @@ def main():
 		for x in repositorios:
 			branch = utilidades.branch(x)
 			nombre = utilidades.obtener_nombre(x)
-			cambios = utilidades.cantidad_de_cambios_remotos_no_sincronizados(x)
+			cambios = utilidades.cantidad_de_cambios_remotos_no_sincronizados(x, branch)
 			cambios_sin_commits = utilidades.obtener_cambios_sin_commits(x)
 
 			if cambios > 0:

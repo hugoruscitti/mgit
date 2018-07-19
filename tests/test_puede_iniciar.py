@@ -21,8 +21,9 @@ def test_puede_listar_directorios():
 
 	for x in directorios:
 		print(utilidades.obtener_nombre(x))
-		print(utilidades.branch(x))
-		print(utilidades.cantidad_de_cambios_remotos_no_sincronizados(x))
+		branch = utilidades.branch(x)
+		print(branch)
+		print(utilidades.cantidad_de_cambios_remotos_no_sincronizados(x, branch))
 		print(utilidades.obtener_cambios_sin_commits(x))
 
 def test_puede_obtener_nombre():
