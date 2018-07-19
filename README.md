@@ -10,6 +10,8 @@ junto con algunos indicadores para resolver estas consultas:
 - ¿Cuantos cambios remotos debería traer?
 - ¿Hay archivos modificados que aún no se incluyeron en commits?
 
+![preview/demo.png](preview/demo.gif)
+
 ## Instalación
 
 ```
