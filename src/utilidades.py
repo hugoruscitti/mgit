@@ -23,7 +23,7 @@ def listar_directorios_git(path):
     return directorios
 
 def obtener_cambios_sin_commits(path):
-    return len(ejecutar('git status --short', path).split('\n')) -1
+    return len([x for x in ejecutar('git status --short', path).split('\n') if x])
 
 def obtener_nombre(path):
     return os.path.basename(path)
