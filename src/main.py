@@ -22,7 +22,7 @@ def main():
 			cambios_sin_commits = utilidades.obtener_cambios_sin_commits(x)
 
 			if cambios > 0:
-				estado_remoto = f'{Fore.YELLOW}↧ requiere pull{Style.RESET_ALL}'
+				estado_remoto = f'{Fore.RED}↧ remoto{Style.RESET_ALL}'
 			else:
 				estado_remoto = f'{Fore.GREEN}✓ remoto{Style.RESET_ALL}'
 
