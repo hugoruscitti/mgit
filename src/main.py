@@ -6,7 +6,7 @@ from yaspin.spinners import Spinners
 import sys
 import utilidades
 
-path = sys.argv[-1]
+path = sys.argv[1]
 
 def main():
 	repositorios = utilidades.listar_directorios_git(path)
@@ -22,7 +22,12 @@ def main():
 			cambios_sin_commits = utilidades.obtener_cambios_sin_commits(x)
 
 			if cambios > 0:
-				estado_remoto = f'{Fore.RED}↺ remoto{Style.RESET_ALL}'
+
+				if 'pull' in sys.argv:
+					estado_remoto = f'{Fore.YELLOW}✓ pulled{Style.RESET_ALL}'
+					utilidades.realizar_pull(x, branch)
+				else:
+					estado_remoto = f'{Fore.RED}↺ remoto{Style.RESET_ALL}'
 			else:
 				estado_remoto = f'{Fore.GREEN}✓ remoto{Style.RESET_ALL}'
 
