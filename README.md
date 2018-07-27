@@ -40,3 +40,10 @@ tus repositorios:
 ```
 mgit
 ```
+
+También existe un comando extra llamado `pull` para sincronizar los repositorios
+justo antes de listarlos:
+
+```
+mgit pull
+```

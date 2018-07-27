@@ -2,6 +2,7 @@ from colorama import Fore, Back, Style
 from tabulate import tabulate
 from yaspin import yaspin
 from yaspin.spinners import Spinners
+import subprocess
 
 import sys
 import utilidades
@@ -18,27 +19,31 @@ def main():
 		for x in repositorios:
 			branch = utilidades.branch(x)
 			nombre = utilidades.obtener_nombre(x)
-			cambios = utilidades.cantidad_de_cambios_remotos_no_sincronizados(x, branch)
-			cambios_sin_commits = utilidades.obtener_cambios_sin_commits(x)
 
-			if cambios > 0:
+			try:
+				cambios = utilidades.cantidad_de_cambios_remotos_no_sincronizados(x, branch)
+				cambios_sin_commits = utilidades.obtener_cambios_sin_commits(x)
 
-				if 'pull' in sys.argv:
-					estado_remoto = f'{Fore.YELLOW}✓ pulled{Style.RESET_ALL}'
-					utilidades.realizar_pull(x, branch)
+				if cambios > 0:
+
+					if 'pull' in sys.argv:
+						estado_remoto = f'{Fore.YELLOW}✓ pulled{Style.RESET_ALL}'
+						utilidades.realizar_pull(x, branch)
+					else:
+						estado_remoto = f'{Fore.RED}↺ remoto{Style.RESET_ALL}'
 				else:
-					estado_remoto = f'{Fore.RED}↺ remoto{Style.RESET_ALL}'
-			else:
-				estado_remoto = f'{Fore.GREEN}✓ remoto{Style.RESET_ALL}'
+					estado_remoto = f'{Fore.GREEN}✓ remoto{Style.RESET_ALL}'
 
-			if cambios_sin_commits > 0:
-				estado_local = f'{Fore.RED}↺ local{Style.RESET_ALL}'
-			else:
-				estado_local = f'{Fore.GREEN}✓ local{Style.RESET_ALL}'
+				if cambios_sin_commits > 0:
+					estado_local = f'{Fore.RED}↺ local{Style.RESET_ALL}'
+				else:
+					estado_local = f'{Fore.GREEN}✓ local{Style.RESET_ALL}'
 
+			except subprocess.CalledProcessError:
+				estado_remoto = f'{Fore.RED}⊗ error{Style.RESET_ALL}'
+				estado_local = f'{Fore.RED}⊗ error{Style.RESET_ALL}'
 
 			items.append([nombre, estado_remoto, estado_local, branch])
-			#print(" {} \t\t {} {} \t [{}]".format(nombre, estado_remoto, estado_local, branch))
 
 
 	print(tabulate(items, headers=['Repositorio', 'Estado Remoto', 'Estado Local', 'Branch']))
