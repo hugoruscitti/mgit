@@ -8,9 +8,13 @@ def branch(path):
     return ejecutar('git rev-parse --abbrev-ref HEAD', path)
 
 def cantidad_de_cambios_remotos_no_sincronizados(path, branch):
-    ejecutar('git fetch origin', path)
+    #ejecutar('git fetch origin', path)
     comando = 'git rev-list HEAD...origin/{} --count'.format(branch)
     return int(ejecutar(comando, path))
+
+def async_sincronizar(path):
+    p = subprocess.Popen(['git', 'fetch', 'origin'], cwd=path)
+    return p
 
 def realizar_pull(path, branch):
     comando = 'git pull origin {}'.format(branch)

@@ -16,6 +16,15 @@ def main():
 	items = []
 
 	with yaspin(Spinners.arc, text="Consultando repositorios", color="blue") as spinner:
+		procesos = []
+
+		for x in repositorios:
+			proceso = utilidades.async_sincronizar(x)
+			procesos.append(proceso)
+
+		for proceso in procesos:
+			proceso.wait()
+
 		for x in repositorios:
 			branch = utilidades.branch(x)
 			nombre = utilidades.obtener_nombre(x)
