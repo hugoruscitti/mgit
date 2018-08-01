@@ -13,7 +13,7 @@ def cantidad_de_cambios_remotos_no_sincronizados(path, branch):
     return int(ejecutar(comando, path))
 
 def async_sincronizar(path):
-    p = subprocess.Popen(['git', 'fetch', 'origin'], cwd=path)
+    p = subprocess.Popen(['git', 'fetch', 'origin'], cwd=path, stderr=subprocess.PIPE)
     return p
 
 def realizar_pull(path, branch):
