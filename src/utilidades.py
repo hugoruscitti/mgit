@@ -12,6 +12,14 @@ def cantidad_de_cambios_remotos_no_sincronizados(path, branch):
     comando = 'git rev-list HEAD...origin/{} --count'.format(branch)
     return int(ejecutar(comando, path))
 
+def obtener_ultimo_tag(path):
+    comando = 'git describe --tags --abbrev=0'
+    return ejecutar(comando, path)
+
+def obtener_commits_desde_el_tag(path, tag):
+    comando = 'git log {}..HEAD --oneline'.format(tag)
+    return int(len(ejecutar(comando, path).split('\n'))) -1
+
 def async_sincronizar(path):
     p = subprocess.Popen(['git', 'fetch', 'origin'], cwd=path, stderr=subprocess.PIPE)
     return p
