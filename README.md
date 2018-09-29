@@ -41,9 +41,19 @@ tus repositorios:
 mgit
 ```
 
-También existe un comando extra llamado `pull` para sincronizar los repositorios
-justo antes de listarlos:
+También vas a poder filtrar por el nombre del repositorio, por ejemplo:
 
 ```
-mgit pull
+mgit pilas-engine
 ```
+
+Produce la salida:
+
+```
+Repositorio           Remoto    Local    Branch    Último tag
+--------------------  --------  -------  --------  -------------
+pilas-engine          ✓ remoto  ✓ local  master    v2.0.58 - 2 ↺
+pilas-engine-backend  ✓ remoto  ✓ local  master    v0.0.6 ✓
+sitio-web-de-pila...  ✓ remoto  ✓ local  master    -
+```
+

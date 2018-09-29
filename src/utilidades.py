@@ -18,7 +18,12 @@ def obtener_ultimo_tag(path):
 
 def obtener_commits_desde_el_tag(path, tag):
     comando = 'git log {}..HEAD --oneline'.format(tag)
-    return int(len(ejecutar(comando, path).split('\n'))) -1
+    cambios = ejecutar(comando, path).split('\n')
+
+    if cambios != ['']:
+        return len(cambios)
+    else:
+        return 0
 
 def async_sincronizar(path):
     p = subprocess.Popen(['git', 'fetch', 'origin'], cwd=path, stderr=subprocess.PIPE)

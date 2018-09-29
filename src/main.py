@@ -18,7 +18,15 @@ def main():
 
 	items = []
 
-	with yaspin(Spinners.arc, text="Consultando repositorios", color="blue") as spinner:
+	if len(sys.argv) > 2:
+		filtro = sys.argv[2]
+		mensaje = "Consultando repositorios con el filtro {} ...".format(filtro)
+		repositorios = [r for r in repositorios if filtro in r]
+	else:
+		filtro = None
+		mensaje = "Consultando repositorios ..."
+
+	with yaspin(Spinners.arc, text=mensaje, color="blue") as spinner:
 		procesos = []
 		return_codes = []
 
@@ -55,12 +63,8 @@ def main():
 						tag = ""
 
 					if cambios > 0:
-
-						if 'pull' in sys.argv:
-							estado_remoto = f'{Fore.YELLOW}✓{Style.RESET_ALL}'
-							utilidades.realizar_pull(x, branch)
-						else:
-							estado_remoto = f'{Fore.RED}↺ remotor{Style.RESET_ALL}'
+						estado_remoto = f'{Fore.YELLOW}✓{Style.RESET_ALL}'
+						utilidades.realizar_pull(x, branch)
 					else:
 						estado_remoto = f'{Fore.GREEN}✓ remoto{Style.RESET_ALL}'
 
