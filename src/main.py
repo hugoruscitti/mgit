@@ -63,15 +63,15 @@ def main():
 						tag = ""
 
 					if cambios > 0:
-						estado_remoto = f'{Fore.YELLOW}✓ actualizado (se hizo pull) {Style.RESET_ALL}'
+						estado_remoto = f'{Fore.YELLOW}✓ realizó pull {Style.RESET_ALL}'
 						utilidades.realizar_pull(x, branch)
 					else:
-						estado_remoto = f'{Fore.GREEN}✓ actualizado{Style.RESET_ALL}'
+						estado_remoto = f'{Fore.GREEN}✓ sync{Style.RESET_ALL}'
 
 					if cambios_sin_commits > 0:
-						estado_local = f'{Fore.RED}↺ falta commit{Style.RESET_ALL}'
+						estado_local = f'{Fore.RED}↺ no sync{Style.RESET_ALL}'
 					else:
-						estado_local = f'{Fore.GREEN}✓ actualizado{Style.RESET_ALL}'
+						estado_local = f'{Fore.GREEN}✓ sync{Style.RESET_ALL}'
 
 			except subprocess.CalledProcessError:
 				estado_remoto = f'{Fore.RED}⊗ error{Style.RESET_ALL}'
