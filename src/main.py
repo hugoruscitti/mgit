@@ -50,6 +50,12 @@ def main():
 					cambios = utilidades.cantidad_de_cambios_remotos_no_sincronizados(x, branch)
 					cambios_sin_commits = utilidades.obtener_cambios_sin_commits(x)
 
+					if cambios > 0:
+						estado_remoto = f'{Fore.YELLOW}✓ realizó pull {Style.RESET_ALL}'
+						utilidades.realizar_pull(x, branch)
+					else:
+						estado_remoto = f'{Fore.GREEN}✓ sync{Style.RESET_ALL}'
+
 					try:
 						tag = utilidades.obtener_ultimo_tag(x)
 						cantidad = utilidades.obtener_commits_desde_el_tag(x, tag)
@@ -62,11 +68,6 @@ def main():
 					except subprocess.CalledProcessError:
 						tag = ""
 
-					if cambios > 0:
-						estado_remoto = f'{Fore.YELLOW}✓ realizó pull {Style.RESET_ALL}'
-						utilidades.realizar_pull(x, branch)
-					else:
-						estado_remoto = f'{Fore.GREEN}✓ sync{Style.RESET_ALL}'
 
 					if cambios_sin_commits > 0:
 						estado_local = f'{Fore.RED}↺ no sync{Style.RESET_ALL}'
