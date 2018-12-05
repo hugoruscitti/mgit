@@ -38,9 +38,21 @@ def main():
 			return_codes.append(proceso.wait())
 
 		for (indice, x) in enumerate(repositorios):
-			branch = utilidades.branch(x)
 			nombre = utilidades.obtener_nombre(x)
 			descripcion_tag = '-'
+
+			if len(nombre) > LIMITE:
+				nombre_corto = nombre[:LIMITE-3] + "..."
+			else:
+				nombre_corto = nombre
+
+			try:
+				branch = utilidades.branch(x)
+			except subprocess.CalledProcessError as error:
+				error = f'{Fore.RED}⊗ error{Style.RESET_ALL}'
+				items.append([nombre_corto, error, error, error, error])
+				continue
+
 
 			try:
 				if return_codes[indice] > 0:
@@ -78,11 +90,7 @@ def main():
 				estado_remoto = f'{Fore.RED}⊗ error{Style.RESET_ALL}'
 				estado_local = f'{Fore.RED}⊗ error{Style.RESET_ALL}'
 
-
-			if len(nombre) > LIMITE:
-				nombre = nombre[:LIMITE-3] + "..."
-
-			items.append([nombre, estado_remoto, estado_local, branch, descripcion_tag])
+			items.append([nombre_corto, estado_remoto, estado_local, branch, descripcion_tag])
 
 
 	print(tabulate(items, headers=['Repositorio', 'Remoto', 'Local', 'Branch', 'Último tag']))
