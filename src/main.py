@@ -24,9 +24,9 @@ def main():
 		repositorios = [r for r in repositorios if filtro in r]
 	else:
 		filtro = None
-		mensaje = "Consultando repositorios ..."
+		mensaje = f"Consultando {len(repositorios)} repositorios"
 
-	with yaspin(Spinners.arc, text=mensaje, color="blue") as spinner:
+	with yaspin(Spinners.arc, text=mensaje + "...", color="blue") as spinner:
 		procesos = []
 		return_codes = []
 
@@ -34,8 +34,11 @@ def main():
 			proceso = utilidades.async_sincronizar(x)
 			procesos.append(proceso)
 
+		total = len(repositorios)
+
 		for proceso in procesos:
 			return_codes.append(proceso.wait())
+			spinner.text = f"{mensaje} {len(return_codes)}/{total} ..."
 
 		for (indice, x) in enumerate(repositorios):
 			nombre = utilidades.obtener_nombre(x)
