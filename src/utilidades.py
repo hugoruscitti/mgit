@@ -29,8 +29,11 @@ def async_sincronizar(path):
     p = subprocess.Popen(['git', 'fetch', 'origin'], cwd=path, stderr=subprocess.PIPE)
     return p
 
-def realizar_pull(path, branch):
+def realizar_pull_y_push(path, branch):
     comando = 'git pull origin {}'.format(branch)
+    ejecutar(comando, path)
+
+    comando = 'git push origin {}'.format(branch)
     return ejecutar(comando, path)
 
 def listar_directorios_git(path):

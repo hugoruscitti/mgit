@@ -66,8 +66,8 @@ def main():
 					cambios_sin_commits = utilidades.obtener_cambios_sin_commits(x)
 
 					if cambios > 0:
-						estado_remoto = f'{Fore.YELLOW}✓ realizó pull {Style.RESET_ALL}'
-						utilidades.realizar_pull(x, branch)
+						estado_remoto = f'{Fore.YELLOW}✓ realizó pull/push {Style.RESET_ALL}'
+						utilidades.realizar_pull_y_push(x, branch)
 					else:
 						estado_remoto = f'{Fore.GREEN}✓ sync{Style.RESET_ALL}'
 
