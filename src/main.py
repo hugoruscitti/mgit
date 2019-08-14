@@ -10,7 +10,7 @@ import utilidades
 path = sys.argv[1]
 
 # Limite del nombre de repositorio
-LIMITE = 20
+LIMITE = 30
 
 def main():
 	repositorios = utilidades.listar_directorios_git(path)
