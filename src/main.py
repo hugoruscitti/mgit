@@ -3,6 +3,8 @@ from tabulate import tabulate
 from yaspin import yaspin
 from yaspin.spinners import Spinners
 import subprocess
+import time
+import math
 
 import sys
 import utilidades
@@ -11,6 +13,34 @@ path = sys.argv[1]
 
 # Limite del nombre de repositorio
 LIMITE = 30
+CANTIDAD_DE_PROCESOS_EN_PARALELO = 10
+
+
+def obtener_grupo_de_procesos(procesos, repositorios):
+	while len(procesos) < CANTIDAD_DE_PROCESOS_EN_PARALELO:
+		if len(repositorios) > 0:
+			repositorio = repositorios.pop()
+			proceso = utilidades.async_sincronizar(repositorio)
+			procesos.append(proceso)
+		else:
+			return
+
+def obtener_progreso(cantidad, total):
+	width = 6
+	progress = cantidad / total
+
+	progress = max(progress, 0.04)
+    # 0 <= progress <= 1
+	progress = min(1, max(0, progress))
+	whole_width = math.floor(progress * width)
+	remainder_width = (progress * width) % 1
+	part_width = math.floor(remainder_width * 8)
+	part_char = [" ", "▏", "▎", "▍", "▌", "▋", "▊", "▉"][part_width]
+	if (width - whole_width - 1) < 0:
+		part_char = ""
+	line = "" + "█" * whole_width + part_char + " " * (width - whole_width - 1) + "▏"
+	return line
+
 
 def main():
 	repositorios = utilidades.listar_directorios_git(path)
@@ -20,27 +50,43 @@ def main():
 
 	if len(sys.argv) > 2:
 		filtro = sys.argv[2]
-		mensaje = "Consultando repositorios con el filtro {} ...".format(filtro)
+		mensaje = "Sincronizando repositorios con el filtro {} ...".format(filtro)
 		repositorios = [r for r in repositorios if filtro in r]
 	else:
 		filtro = None
-		mensaje = f"Consultando {len(repositorios)} repositorios"
+		mensaje = f"Sincronizando repositorios"
 
 	with yaspin(Spinners.arc, text=mensaje + "...", color="blue") as spinner:
 		procesos = []
 		return_codes = []
 
-		for x in repositorios:
-			proceso = utilidades.async_sincronizar(x)
-			procesos.append(proceso)
-
 		total = len(repositorios)
+		repositorios_originales = repositorios[:]
 
-		for proceso in procesos:
-			return_codes.append(proceso.wait())
-			spinner.text = f"{mensaje} {len(return_codes)}/{total} ..."
+		while repositorios:
+			obtener_grupo_de_procesos(procesos, repositorios)
 
-		for (indice, x) in enumerate(repositorios):
+			# mientras existan procesos en ejecución:
+			while len(procesos) > 0:
+				for proceso_en_ejecucion in procesos[:]:
+
+					if proceso_en_ejecucion.poll() is not None:
+						# Si un proceso finaliza
+						return_codes.append(proceso_en_ejecucion.wait())
+						procesos.remove(proceso_en_ejecucion)
+						# Intenta volver a cargar el pool de procesos
+						obtener_grupo_de_procesos(procesos, repositorios)
+						progreso = obtener_progreso(len(return_codes), total)
+						spinner.text = f"{mensaje}: {progreso}"
+						continue
+					else:
+						# Si el comando sigue ejecutando, espera para ir al siguiente proceso en ejecución.
+						progreso = obtener_progreso(len(return_codes), total)
+						spinner.text = f"{mensaje}: {progreso}"
+						time.sleep(.1)
+
+
+		for (indice, x) in enumerate(repositorios_originales):
 			nombre = utilidades.obtener_nombre(x)
 			descripcion_tag = '-'
 
