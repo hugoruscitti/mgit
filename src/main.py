@@ -50,7 +50,7 @@ def main():
 
 	if len(sys.argv) > 2:
 		filtro = sys.argv[2]
-		mensaje = "Sincronizando repositorios con el filtro {} ...".format(filtro)
+		mensaje = "Sincronizando repositorios con el filtro {} ".format(filtro)
 		repositorios = [r for r in repositorios if filtro in r]
 	else:
 		filtro = None
