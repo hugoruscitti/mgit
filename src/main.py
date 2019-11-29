@@ -102,8 +102,9 @@ def main():
 				print(f"\rSincronizando repositorios: {progreso}", end="")
 
 	progreso = obtener_progreso(10, 10)
-	print(f"\r                                                    ", end="")
-	print("\n")
+	print(f"\rSincronizando repositorios: {progreso}", end="")
+	time.sleep(.8)
+	print(f"\r                                                    ", end="\n")
 
 
 	for (indice, x) in enumerate(repositorios_originales):
