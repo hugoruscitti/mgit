@@ -16,7 +16,6 @@ gitpython = "*"
 pytest = "*"
 pytest-watch = "*"
 tabulate = "*"
-yaspin = "*"
 
 
 [requires]
