@@ -102,7 +102,7 @@ def main():
 				print(f"\rSincronizando repositorios: {progreso}", end="")
 
 	progreso = obtener_progreso(10, 10)
-	print(f"\r{mensaje}: {verde} {progreso} {fin}", end="")
+	print(f"\r                                                    ", end="")
 	print("\n")
 
 
