@@ -35,7 +35,7 @@ En bash:
 export PATH=$PATH:~/.mgit/bin
 ```
 
-Y por último, ejecutá este comando en el directorio en donde hallas clonado
+Y por último, ejecutá este comando en el directorio en donde hayas clonado
 tus repositorios:
 
 ```
