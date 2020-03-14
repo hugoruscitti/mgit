@@ -120,7 +120,7 @@ def main():
 			branch = utilidades.branch(x)
 		except subprocess.CalledProcessError as error:
 			error = f'{Fore.RED}⊗ error{Style.RESET_ALL}'
-			items.append([nombre_corto, error, error, error, error])
+			items.append([f'{Fore.RED}{nombre_corto}{Style.RESET_ALL}', error, error, error, error])
 			continue
 
 
@@ -156,11 +156,17 @@ def main():
 				else:
 					estado_local = f'{Fore.GREEN}✓ sync{Style.RESET_ALL}'
 
+			if '✓' in estado_remoto and '✓' in estado_local:
+				color = Fore.GREEN
+			else:
+				color = Fore.RED
+
 		except subprocess.CalledProcessError:
 			estado_remoto = f'{Fore.RED}⊗ error{Style.RESET_ALL}'
 			estado_local = f'{Fore.RED}⊗ error{Style.RESET_ALL}'
+			color = Fore.RED
 
-		items.append([nombre_corto, estado_remoto, estado_local, branch, descripcion_tag])
+		items.append([f'{color}{nombre_corto}{Style.RESET_ALL}', estado_remoto, estado_local, branch, descripcion_tag])
 
 
 	print(tabulate(items, headers=['Repositorio', 'Remoto', 'Local', 'Branch', 'Último tag']))
